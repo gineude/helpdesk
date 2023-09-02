@@ -1,5 +1,6 @@
 package com.gineude.helpdesk.resources;
 
+import com.gineude.helpdesk.domains.Tecnico;
 import com.gineude.helpdesk.dtos.TecnicoDTO;
 import com.gineude.helpdesk.services.TecnicoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/tecnicos")
@@ -20,5 +24,12 @@ public class TecnicoResource {
     public ResponseEntity<TecnicoDTO> findById(@PathVariable Integer id) {
         TecnicoDTO obj = new TecnicoDTO(service.findById(id));
         return ResponseEntity.ok().body(obj);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<TecnicoDTO>> findAll() {
+        List<Tecnico> list = service.findAll();
+        List<TecnicoDTO> dtoList = list.stream().map(obj -> new TecnicoDTO(obj)).collect(Collectors.toList());
+        return ResponseEntity.ok().body(dtoList);
     }
 }
