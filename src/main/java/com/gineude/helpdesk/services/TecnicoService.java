@@ -1,6 +1,7 @@
 package com.gineude.helpdesk.services;
 
 import com.gineude.helpdesk.domains.Tecnico;
+import com.gineude.helpdesk.services.exceptions.ObjectNotFoundException;
 import com.gineude.helpdesk.repositories.TecnicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,6 @@ public class TecnicoService {
 
     public Tecnico findById(Integer id) {
         Optional<Tecnico> obj = repository.findById(id);
-        return obj.orElse(null);
+        return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id " + id));
     }
 }
