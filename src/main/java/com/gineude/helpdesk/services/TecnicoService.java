@@ -38,6 +38,14 @@ public class TecnicoService {
         return repository.save(newObj);
     }
 
+    public Tecnico update(Integer id, TecnicoDTO dto) {
+        dto.setId(id);
+        Tecnico oldObj = findById(id);
+        validacaoDuplicidade(dto);
+        oldObj = new Tecnico(dto);
+        return repository.save(oldObj);
+    }
+
     private void validacaoDuplicidade(TecnicoDTO tecnicoDTO) {
         Optional<Pessoa> objDB = pessoaRepository.findByCpf(tecnicoDTO.getCpf());
         if (objDB.isPresent() && objDB.get().getId() != tecnicoDTO.getId()) {
