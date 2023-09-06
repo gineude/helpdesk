@@ -1,6 +1,7 @@
 package com.gineude.helpdesk.services;
 
 import com.gineude.helpdesk.domains.Tecnico;
+import com.gineude.helpdesk.dtos.TecnicoDTO;
 import com.gineude.helpdesk.services.exceptions.ObjectNotFoundException;
 import com.gineude.helpdesk.repositories.TecnicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,11 @@ public class TecnicoService {
 
     public List<Tecnico> findAll() {
         return repository.findAll();
+    }
+
+    public Tecnico create(TecnicoDTO tecnicoDTO) {
+        tecnicoDTO.setId(null);
+        Tecnico newObj = new Tecnico(tecnicoDTO);
+        return repository.save(newObj);
     }
 }
