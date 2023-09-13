@@ -3,6 +3,7 @@ package com.gineude.helpdesk.domains;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gineude.helpdesk.domains.enums.Prioridade;
 import com.gineude.helpdesk.domains.enums.Status;
+import com.gineude.helpdesk.dtos.ChamadoDTO;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -47,6 +48,15 @@ public class Chamado implements Serializable {
 
     public Chamado() {
         super();
+    }
+
+    public Chamado(ChamadoDTO chamadoDTO) {
+        this();
+        this.id = chamadoDTO.getId();
+        this.prioridade = Prioridade.toEnum(chamadoDTO.getPrioridade());
+        this.status = Status.toEnum(chamadoDTO.getStatus());
+        this.titulo = chamadoDTO.getTitulo();
+        this.observacoes = chamadoDTO.getObservacoes();
     }
 
     public Chamado(Integer id, Prioridade prioridade, Status status, String titulo, String observacoes, Tecnico tecnico, Cliente cliente) {
