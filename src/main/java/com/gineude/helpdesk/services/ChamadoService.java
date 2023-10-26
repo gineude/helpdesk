@@ -45,11 +45,6 @@ public class ChamadoService {
         return repository.save(oldObj);
     }
 
-    public void delete(Integer id) {
-        Chamado obj = findById(id);
-        repository.deleteById(id);
-    }
-
     private Chamado newChamado(ChamadoDTO dto) {
         Tecnico tecnico = tecnicoService.findById(dto.getTecnico());
         Cliente cliente = clienteService.findById(dto.getCliente());

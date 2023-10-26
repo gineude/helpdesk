@@ -8,6 +8,7 @@ import com.gineude.helpdesk.services.exceptions.DataIntegrityViolationException;
 import com.gineude.helpdesk.services.exceptions.ObjectNotFoundException;
 import com.gineude.helpdesk.repositories.TecnicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,9 @@ import java.util.Optional;
 
 @Service
 public class TecnicoService {
+
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
     @Autowired
     private TecnicoRepository repository;
@@ -33,6 +37,7 @@ public class TecnicoService {
 
     public Tecnico create(TecnicoDTO tecnicoDTO) {
         tecnicoDTO.setId(null);
+        tecnicoDTO.setSenha(encoder.encode(tecnicoDTO.getSenha()));
         validacaoDuplicidade(tecnicoDTO);
         Tecnico newObj = new Tecnico(tecnicoDTO);
         return repository.save(newObj);

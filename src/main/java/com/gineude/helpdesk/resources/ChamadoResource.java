@@ -52,10 +52,4 @@ public class ChamadoResource {
         Chamado oldObj = service.update(id, dto);
         return ResponseEntity.ok().body(new ChamadoDTO(oldObj));
     }
-
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<ChamadoDTO> delete(@PathVariable Integer id) {
-        service.delete(id);
-        return ResponseEntity.noContent().build();
-    }
 }
